@@ -1,1 +1,0 @@
-# Three JS Journey starts now
