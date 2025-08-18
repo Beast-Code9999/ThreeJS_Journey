@@ -1,5 +1,15 @@
 import * as THREE from 'three'
 
+// Array camera: render the scene from multiple cameras 
+
+// Stereo camera render the scene through two cameras that mimic the eyes to create parallax effect
+
+// Cube camera the SubeCamera do 6 renders, each one facing a different direction
+
+// Orthographic camera: Render the scene without perspective
+
+
+
 /**
  * Base
  */
@@ -23,12 +33,27 @@ const mesh = new THREE.Mesh(
 scene.add(mesh)
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
+// 4 parameters: Vertical field of view in degrees, aspect ratio, near, far (the last two determines how near and far the field of view)
+// const camera = new THREE.PerspectiveCamera(140, sizes.width / sizes.height, 0.1, 100)
+
+const aspectRatio = sizes.width / sizes.height
+// 6 paramters, left, right, top, bottom, near, far
+const camera = new THREE.OrthographicCamera(
+    -1 * aspectRatio, 
+    1 * aspectRatio,
+    1, 
+    -1, 
+    0.1, 
+    100)
+
 camera.position.x = 2
 camera.position.y = 2
 camera.position.z = 2
 camera.lookAt(mesh.position)
 scene.add(camera)
+
+
+
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
