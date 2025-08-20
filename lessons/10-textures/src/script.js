@@ -1,3 +1,11 @@
+// where to find textures
+
+/**
+ * poliigon.com
+ * 3dtextures.me
+ * arroway-textures.ch
+ */
+
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
