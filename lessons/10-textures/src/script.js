@@ -1,6 +1,70 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
+
+
+/**
+ * Textures
+ */
+
+// const image = new Image()
+// const texture = new THREE.Texture(image)
+// texture.colorSpace = THREE.SRGBColorSpace
+
+// image.onload = () =>
+// {
+//     texture.needsUpdate = true
+// }
+// image.src = '/textures/door/color.jpg'
+
+// create an instance of loading manager class and then pass it to the textureloader
+const loadingManager = new THREE.LoadingManager()
+loadingManager.onStart = () =>
+{
+    console.log('loading started')
+}
+loadingManager.onLoad = () =>
+{
+    console.log('loading finished')
+}
+loadingManager.onProgress = () =>
+{
+    console.log('loading progressing')
+}
+loadingManager.onError = () =>
+{
+    console.log('loading error')
+}
+
+const textureLoader = new THREE.TextureLoader(loadingManager) 
+// one texture loader can create multiple textures so you just have to call it once
+const colorTexture = textureLoader.load('/textures/door/color.jpg')
+colorTexture.colorSpace = THREE.SRGBColorSpace
+// load more textures
+const alphaTexture = textureLoader.load('/textures/door/alpha.jpg')
+const heightTexture = textureLoader.load('/textures/door/height.jpg')
+const normalTexture = textureLoader.load('/textures/door/normal.jpg')
+const ambientOcclusionTexture = textureLoader.load('/textures/door/ambientOcclusion.jpg')
+const metalnessTexture = textureLoader.load('/textures/door/metalness.jpg')
+const roughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
+
+// add texture minfilter
+colorTexture.generateMipmaps = false
+colorTexture.magFilter = THREE.NearestFilter
+// below are other posibilities
+// THREE.LinearFilter
+// THREE.NearestMipmapNearestFilter
+// THREE.NearestMipmapLinearFilter
+// THREE.LinearMipmapNearestFilter
+// THREE.LinearMipmapLinearFilter
+
+// when creating your own texture you need to remember of three things:
+// The weidght 
+// The size or resolution
+// The data
+
+// use websites like TinyPNG to compress  the size of images
+
 /**
  * Base
  */
@@ -14,7 +78,8 @@ const scene = new THREE.Scene()
  * Object
  */
 const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+console.log(geometry.attributes.uv)
+const material = new THREE.MeshBasicMaterial({ map: colorTexture })
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
