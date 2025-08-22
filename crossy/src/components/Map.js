@@ -24,7 +24,7 @@ export const metadata = [
     {
         type: "truck",
         direction: true,
-        speed: 0,
+        speed: 60,
         vehicles: [{
             initialTileIndex: -4,
             color: "#00ff00"
@@ -34,7 +34,7 @@ export const metadata = [
     {
         type: "car",
         direction: false, // if true moving right, if false moving left
-        speed: 1, // how many units each vehicle takes per second
+        speed: 160, // how many units each vehicle takes per second
         vehicles: [ // array of vehicles
             { initialTileIndex: 2, color: '#ff0000'},
         ]
@@ -93,6 +93,7 @@ export function addRows() {
                     rowData.direction,
                     vehicle.color
                 )
+                vehicle.ref = car
                 row.add(car)
             })
             map.add(row)
@@ -108,6 +109,7 @@ export function addRows() {
                     rowData.direction,
                     vehicle.color
                 )
+                vehicle.ref = truck
                 row.add(truck);
             })
             map.add(row);

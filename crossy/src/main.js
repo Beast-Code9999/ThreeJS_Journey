@@ -4,6 +4,7 @@ import { Camera } from "./components/Camera"
 import { DirectionalLight } from "./components/directionalLight"
 import { player } from "./components/Player"
 import { map, initialiseMap } from "./components/Map"
+import { animateVehicles } from "./animateVehicles"
 import "./style.css"
 
 const scene = new THREE.Scene()
@@ -31,4 +32,20 @@ function initialiseGame() {
 }
 
 const renderer = Renderer()
-renderer.render(scene, camera)
+// renderer.render(scene, camera)
+
+// Tell the renderer to use the animate() function as the render loop
+// This is like requestAnimationFrame but optimized for VR/AR/WebXR as well.
+renderer.setAnimationLoop(animate)
+
+/**
+ * The main animation loop.
+ * Called automatically every frame (~60 times per second).
+ */
+function animate() {
+  // Update vehicle positions, movement, or logic
+  animateVehicles()
+
+  // Render the scene from the camera's perspective
+  renderer.render(scene, camera)
+}
