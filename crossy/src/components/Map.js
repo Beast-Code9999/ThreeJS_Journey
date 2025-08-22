@@ -9,8 +9,9 @@
 
 import * as THREE from "three"
 import { Grass } from "./Grass" // grass function that screst the grass rows
+import { Road } from "./Road"
 import { Tree } from "./Tree" // tree function that creates the tree objects
-
+import { Car } from "./Car"
 
 /**
  * metadata
@@ -20,13 +21,21 @@ import { Tree } from "./Tree" // tree function that creates the tree objects
  */
 export const metadata = [
     {
-        type: "forest",
-        trees: [
-            { tileIndex: -3, height: 50 },
-            { tileIndex: 2, height: 30 },
-            { tileIndex: 5, height: 50 },
-        ],
+        type: "car",
+        direction: false, // if true moving right, if false moving left
+        speed: 1, // how many units each vehicle takes per second
+        vehicles: [ // array of vehicles
+            { initialTileIndex: 2, color: '#ff0000'},
+        ]
     },
+    // {
+    //     type: "forest",
+    //     trees: [
+    //         { tileIndex: -3, height: 50 },
+    //         { tileIndex: 2, height: 30 },
+    //         { tileIndex: 5, height: 50 },
+    //     ],
+    // },
 ]
 
 
@@ -46,6 +55,7 @@ export function addRows() {
     metadata.forEach((rowData, index) => {
         const rowIndex = index + 1; // starts after row 0 aka (initial grass row)
 
+        // for forest
         if (rowData.type === "forest") { // if row is forest
             // create a gradd with the given row index
             const row = Grass(rowIndex)
@@ -53,10 +63,26 @@ export function addRows() {
             // create the tree with the given tile index and height
             // add tree to the row group
             rowData.trees.forEach(({ tileIndex, height }) => {
-                const three = Tree(tileIndex, height)
-                row.add(three)
+                const tree = Tree(tileIndex, height)
+                row.add(tree)
             })
             // add the completed row to the map group
+            map.add(row)
+        }
+
+
+        // for car lanes
+        if (rowData.type === "car") {
+            const row = Road(rowIndex)
+            
+            rowData.vehicles.forEach((vehicle) => {
+                const car = Car(
+                    vehicle.initialTileIndex,
+                    rowData.direction,
+                    vehicle.color
+                )
+                row.add(car)
+            })
             map.add(row)
         }
     })
