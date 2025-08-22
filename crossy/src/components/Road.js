@@ -28,6 +28,7 @@ export function Road(rowIndex) {
         })
     )
 
+    foundation.receiveShadow = true // receive shadow rather than cast
     // Add the road foundation to the group
     road.add(foundation)
 

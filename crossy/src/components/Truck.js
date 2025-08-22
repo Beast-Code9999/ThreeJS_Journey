@@ -31,6 +31,8 @@ export function Truck(initialTileIndex, direction, color) {
   // Position cargo slightly behind and above the truck's origin
   cargo.position.x = -15
   cargo.position.z = 25
+  cargo.castShadow = true
+  cargo.receiveShadow = true
   truck.add(cargo)
 
   // Create the cabin of the truck
@@ -41,6 +43,8 @@ export function Truck(initialTileIndex, direction, color) {
   // Position cabin slightly forward and above the truck's origin
   cabin.position.x = 35
   cabin.position.z = 20
+  cabin.castShadow = true
+  cabin.receiveShadow = true
   truck.add(cabin)
 
   // Add wheels at appropriate X offsets

@@ -31,6 +31,8 @@ export function Car(initialTileIndex, direction, color) {
   );
   // Raise the main body so it sits above the ground
   main.position.z = 12
+  main.castShadow = true
+  main.receiveShadow = true
   car.add(main)
 
   // Create the car's cabin (driver area)
@@ -44,6 +46,8 @@ export function Car(initialTileIndex, direction, color) {
   // Slightly offset cabin backward along X and raise along Z
   cabin.position.x = -6
   cabin.position.z = 25.5
+  cabin.castShadow = true
+  cabin.receiveShadow = true
   car.add(cabin)
 
   // Add front wheel at positive X offset

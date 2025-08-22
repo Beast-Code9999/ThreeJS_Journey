@@ -12,6 +12,7 @@ function Player() {
         })
     ) 
     body.position.z = 10 // adjust z axis slightly above "ground"
-
+    body.castShadow = true
+    body.receiveShadow = true
     return body 
 }

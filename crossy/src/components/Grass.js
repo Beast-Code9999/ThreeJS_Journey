@@ -14,6 +14,7 @@ export function Grass(rowIndex) {
         })
     )
     foundation.position.z = 1.5; // a bit of a height so it sticks out compared to a road
+    foundation.receiveShadow = true // receive shadow rather than cast
     grass.add(foundation)
 
     return grass
