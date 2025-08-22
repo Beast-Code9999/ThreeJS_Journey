@@ -1,4 +1,5 @@
 import * as THREE from "three"
+import { endsUpInValidPosition } from "../utilities/endsUpInvalidPosition";
 
 export const player = Player();
 
@@ -45,8 +46,8 @@ function Player() {
 
 // Keeps track of the player's current position on the grid
 export const position = {
-  currentRow: 0,   // Row index (increases when moving forward)
-  currentTile: 0,  // Tile index (increases when moving right)
+    currentRow: 0,   // Row index (increases when moving forward)
+     currentTile: 0,  // Tile index (increases when moving right)
 }
 
 // Queue of moves waiting to be executed
@@ -57,7 +58,20 @@ export const movesQueue = []
  * @param {string} direction - One of "forward", "backward", "left", "right"
  */
 export function queueMove(direction) {
-  movesQueue.push(direction)
+    // Check if the next move (or sequence of queued moves) would land in a valid position
+    const isValidMove = endsUpInValidPosition(
+    {
+        rowIndex: position.currentRow,  // Current row of the player
+        tileIndex: position.currentTile, // Current tile of the player
+    },
+    [...movesQueue, direction]       // Simulate the move queue plus the new intended direction
+    )
+
+    // If the move would result in an invalid position (out of bounds or tree collision), ignore it
+    if (!isValidMove) return
+
+    
+    movesQueue.push(direction)
 }
 
 /**
@@ -65,12 +79,11 @@ export function queueMove(direction) {
  * and updating the player's position accordingly.
  */
 export function stepCompleted() {
-  // Take the next move from the queue
-  const direction = movesQueue.shift()
-
-  // Update position based on move
-  if (direction === "forward") position.currentRow += 1
-  if (direction === "backward") position.currentRow -= 1
-  if (direction === "left") position.currentTile -= 1
-  if (direction === "right") position.currentTile += 1
+    // Take the next move from the queue
+    const direction = movesQueue.shift()
+    // Update position based on move
+    if (direction === "forward") position.currentRow += 1
+    if (direction === "backward") position.currentRow -= 1
+    if (direction === "left") position.currentTile -= 1
+    if (direction === "right") position.currentTile += 1
 }
