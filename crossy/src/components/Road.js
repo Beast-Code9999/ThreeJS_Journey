@@ -2,7 +2,7 @@
 // similar to grass function, it returns a group that contains a gray plane
 
 import * as THREE from "three"
-import { tilesPerRow, tileSize } from "../components"
+import { tilesPerRow, tileSize } from "../constants"
 
 /**
  * Creates a horizontal road row at a given index in the map.

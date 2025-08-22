@@ -12,6 +12,7 @@ import { Grass } from "./Grass" // grass function that screst the grass rows
 import { Road } from "./Road"
 import { Tree } from "./Tree" // tree function that creates the tree objects
 import { Car } from "./Car"
+import { Truck } from "./Truck"
 
 /**
  * metadata
@@ -21,6 +22,16 @@ import { Car } from "./Car"
  */
 export const metadata = [
     {
+        type: "truck",
+        direction: true,
+        speed: 0,
+        vehicles: [{
+            initialTileIndex: -4,
+            color: "#00ff00"
+        }]
+    },
+
+    {
         type: "car",
         direction: false, // if true moving right, if false moving left
         speed: 1, // how many units each vehicle takes per second
@@ -28,14 +39,14 @@ export const metadata = [
             { initialTileIndex: 2, color: '#ff0000'},
         ]
     },
-    // {
-    //     type: "forest",
-    //     trees: [
-    //         { tileIndex: -3, height: 50 },
-    //         { tileIndex: 2, height: 30 },
-    //         { tileIndex: 5, height: 50 },
-    //     ],
-    // },
+    {
+        type: "forest",
+        trees: [
+            { tileIndex: -3, height: 50 },
+            { tileIndex: 2, height: 30 },
+            { tileIndex: 5, height: 50 },
+        ],
+    },
 ]
 
 
@@ -43,10 +54,11 @@ export const metadata = [
 export const map = new THREE.Group() // container for 3D objects
 
 export function initialiseMap() {
-    // creates first row
-    const grass = Grass(0)
-    map.add(grass)
-    addRows() // generate additional rows from metadata
+    for (let rowIndex = 0; rowIndex > -5; rowIndex--) {
+        const grass = Grass(rowIndex)
+        map.add(grass)
+    }
+    addRows()
 }
 
 // Generates 3D objects based on the metadata and adds them to the map container
@@ -84,6 +96,21 @@ export function addRows() {
                 row.add(car)
             })
             map.add(row)
+        }
+
+        // for trucks
+        if (rowData.type === "truck") {
+            const row = Road(rowIndex)
+            
+            rowData.vehicles.forEach((vehicle) => {
+                const truck = Truck(
+                    vehicle.initialTileIndex,
+                    rowData.direction,
+                    vehicle.color
+                )
+                row.add(truck);
+            })
+            map.add(row);
         }
     })
 }
