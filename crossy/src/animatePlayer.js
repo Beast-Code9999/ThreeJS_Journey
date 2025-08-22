@@ -49,6 +49,7 @@ function setPosition(progress) {
 
   // Add a jump arc using sine (peaks at mid-step, 0 at start & end)
   player.position.z = Math.sin(progress * Math.PI) * 8
+  player.children[0].position.z = Math.sin(progress * Math.PI) * 8
 }
 
 function setRotation(progress) {
@@ -62,8 +63,8 @@ function setRotation(progress) {
   if (movesQueue[0] === "backward") endRotation = Math.PI
 
   // Smoothly interpolate from current rotation to target rotation
-  player.rotation.z = THREE.MathUtils.lerp(
-    player.rotation.z,
+  player.children[0].rotation.z = THREE.MathUtils.lerp(
+    player.children[0].rotation.z,
     endRotation,
     progress
   )

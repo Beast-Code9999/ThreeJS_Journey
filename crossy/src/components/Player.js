@@ -1,5 +1,6 @@
 import * as THREE from "three"
 import { endsUpInValidPosition } from "../utilities/endsUpInvalidPosition";
+import { metadata as rows, addRows } from "./Map"
 
 export const player = Player();
 
@@ -40,8 +41,10 @@ function Player() {
     player.add(cap)
 
     // Return the complete player group with body + cap
-    return player
+    const plyaerContainer = new THREE.Group()
+    plyaerContainer.add(player)
 
+    return plyaerContainer
 }
 
 // Keeps track of the player's current position on the grid
@@ -74,16 +77,33 @@ export function queueMove(direction) {
     movesQueue.push(direction)
 }
 
+// Keep track of the highest row reached
+let highestRowReached = 0;
+
 /**
  * Marks a step as completed by removing the first move in the queue
  * and updating the player's position accordingly.
  */
+
 export function stepCompleted() {
     // Take the next move from the queue
-    const direction = movesQueue.shift()
+    const direction = movesQueue.shift();
+    
     // Update position based on move
-    if (direction === "forward") position.currentRow += 1
-    if (direction === "backward") position.currentRow -= 1
-    if (direction === "left") position.currentTile -= 1
-    if (direction === "right") position.currentTile += 1
+    if (direction === "forward") position.currentRow += 1;
+    if (direction === "backward") position.currentRow -= 1;
+    if (direction === "left") position.currentTile -= 1;
+    if (direction === "right") position.currentTile += 1;
+    
+    // Add new rows if the player is running out of them
+    if (position.currentRow > rows.length - 10) addRows();
+    
+    // Update the highest row reached
+    if (position.currentRow > highestRowReached) {
+      highestRowReached = position.currentRow;
+    }
+    
+    // Update the score display
+    const scoreDOM = document.getElementById("score");
+    if (scoreDOM) scoreDOM.innerText = highestRowReached.toString();
 }

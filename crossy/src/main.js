@@ -18,11 +18,14 @@ scene.add(map)
 const ambientLight = new THREE.AmbientLight()
 scene.add(ambientLight)
 const dirLight = DirectionalLight()
-dirLight.position.set(-100, -100, 200)
-scene.add(dirLight)
+// dirLight.position.set(-100, -100, 200)
+dirLight.target = player
+// scene.add(dirLight)
+player.add(dirLight)
 
 const camera = Camera()
-scene.add(camera)
+// scene.add(camera)
+player.add(camera)
 
 // initiation
 

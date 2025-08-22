@@ -8,11 +8,13 @@
 // lets you move, rotate, or scel the entire map as a single object
 
 import * as THREE from "three"
+import { generateRows } from "../utilities/generateRows"
 import { Grass } from "./Grass" // grass function that screst the grass rows
 import { Road } from "./Road"
 import { Tree } from "./Tree" // tree function that creates the tree objects
 import { Car } from "./Car"
 import { Truck } from "./Truck"
+
 
 /**
  * metadata
@@ -20,34 +22,7 @@ import { Truck } from "./Truck"
  * has row "type" 
  * and its properties
  */
-export const metadata = [
-    {
-        type: "truck",
-        direction: true,
-        speed: 60,
-        vehicles: [{
-            initialTileIndex: -4,
-            color: "#00ff00"
-        }]
-    },
-
-    {
-        type: "car",
-        direction: false, // if true moving right, if false moving left
-        speed: 160, // how many units each vehicle takes per second
-        vehicles: [ // array of vehicles
-            { initialTileIndex: 2, color: '#ff0000'},
-        ]
-    },
-    {
-        type: "forest",
-        trees: [
-            { tileIndex: -3, height: 50 },
-            { tileIndex: 2, height: 30 },
-            { tileIndex: 5, height: 50 },
-        ],
-    },
-]
+export const metadata = []
 
 
 // acts as a container for all the rows with specific contents
@@ -64,8 +39,13 @@ export function initialiseMap() {
 // Generates 3D objects based on the metadata and adds them to the map container
 // loops through each row in metadata
 export function addRows() {
-    metadata.forEach((rowData, index) => {
-        const rowIndex = index + 1; // starts after row 0 aka (initial grass row)
+    const newMetaData = generateRows(20)
+    
+    const startIndex = metadata.length
+    metadata.push(...newMetaData)
+
+    newMetaData.forEach((rowData, index) => {
+        const rowIndex = startIndex + index + 1; // starts after row 0 aka (initial grass row)
 
         // for forest
         if (rowData.type === "forest") { // if row is forest
