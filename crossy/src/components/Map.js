@@ -10,6 +10,25 @@
 import * as THREE from "three"
 import { Grass } from "./Grass"
 
+
+/**
+ * metadata
+ * array of objects that contain information about each row
+ * has row "type" 
+ * and its properties
+ */
+export const metadata = [
+    {
+        type: "forest",
+        trees: [
+            { tileIndex: -3, height: 50 },
+            { tileIndex: 2, height: 30 },
+            { tileIndex: 5, height: 50 },
+        ],
+    },
+]
+
+
 // acts as a container for all the rows with specific contents
 export const map = new THREE.Group() // container for 3D objects
 
