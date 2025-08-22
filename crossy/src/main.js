@@ -5,7 +5,9 @@ import { DirectionalLight } from "./components/directionalLight"
 import { player } from "./components/Player"
 import { map, initialiseMap } from "./components/Map"
 import { animateVehicles } from "./animateVehicles"
+import { animatePlayer } from "./animatePlayer"
 import "./style.css"
+import "./collectUserInput"
 
 const scene = new THREE.Scene()
 scene.add(player)
@@ -45,6 +47,7 @@ renderer.setAnimationLoop(animate)
 function animate() {
   // Update vehicle positions, movement, or logic
   animateVehicles()
+  animatePlayer()
 
   // Render the scene from the camera's perspective
   renderer.render(scene, camera)
