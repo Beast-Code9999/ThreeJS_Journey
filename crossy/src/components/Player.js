@@ -56,6 +56,21 @@ export const position = {
 // Queue of moves waiting to be executed
 export const movesQueue = []
 
+export function initialisePlayer() {
+    // Reset the 3D player object position
+    player.position.x = 0       // Start in the middle of the map horizontally
+    player.position.y = 0       // Start at the bottom row
+    player.children[0].position.z = 0 // Reset the body height (if adjusted)
+
+    // Reset player metadata
+    position.currentRow = 0     // Start at the first row
+    position.currentTile = 0    // Start at the central tile
+
+    // Clear any queued moves from previous game
+    movesQueue.length = 0
+}
+
+
 /**
  * Adds a movement direction to the queue.
  * @param {string} direction - One of "forward", "backward", "left", "right"
@@ -88,21 +103,21 @@ let highestRowReached = 0;
 export function stepCompleted() {
     // Take the next move from the queue
     const direction = movesQueue.shift();
-    
+
     // Update position based on move
     if (direction === "forward") position.currentRow += 1;
     if (direction === "backward") position.currentRow -= 1;
     if (direction === "left") position.currentTile -= 1;
     if (direction === "right") position.currentTile += 1;
-    
+
     // Add new rows if the player is running out of them
     if (position.currentRow > rows.length - 10) addRows();
-    
+
     // Update the highest row reached
     if (position.currentRow > highestRowReached) {
       highestRowReached = position.currentRow;
     }
-    
+
     // Update the score display
     const scoreDOM = document.getElementById("score");
     if (scoreDOM) scoreDOM.innerText = highestRowReached.toString();

@@ -6,6 +6,8 @@ import { player } from "./components/Player"
 import { map, initialiseMap } from "./components/Map"
 import { animateVehicles } from "./animateVehicles"
 import { animatePlayer } from "./animatePlayer"
+import { initialisePlayer } from "./components/Player"
+import { hitTest } from "./hitTest"
 import "./style.css"
 import "./collectUserInput"
 
@@ -27,13 +29,24 @@ const camera = Camera()
 // scene.add(camera)
 player.add(camera)
 
-// initiation
+const scoreDOM = document.getElementById("score")
+const resultDOM = document.getElementById("result-container")
 
+// initiation
 initialiseGame() // must be called before we render the scene 
 // else empty map will be rendererd
 
+document
+  .querySelector("#retry")
+  ?.addEventListener("click", initialiseGame)
+
 function initialiseGame() {
+  initialisePlayer();
   initialiseMap()
+
+  // initialise UI
+  if (scoreDOM) scoreDOM.innerText = "0"
+  if (resultDOM) resultDOM.style.visibility = "hidden"
 }
 
 const renderer = Renderer()
@@ -51,6 +64,7 @@ function animate() {
   // Update vehicle positions, movement, or logic
   animateVehicles()
   animatePlayer()
+  hitTest()
 
   // Render the scene from the camera's perspective
   renderer.render(scene, camera)

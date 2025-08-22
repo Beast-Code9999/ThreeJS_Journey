@@ -29,6 +29,10 @@ export const metadata = []
 export const map = new THREE.Group() // container for 3D objects
 
 export function initialiseMap() {
+    // Remove all rows and reset when initialise
+    // metadata.length = 0
+    // map.remove(...map.children)
+
     for (let rowIndex = 0; rowIndex > -5; rowIndex--) {
         const grass = Grass(rowIndex)
         map.add(grass)
