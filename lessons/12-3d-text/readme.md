@@ -14,3 +14,6 @@ npm run dev
 # Build for production in the dist/ directory
 npm run build
 ```
+
+# Useful links
+https://gero3.github.io/facetype.js/
