@@ -37,7 +37,7 @@ fontLoader.load(
 
         // Text
         const textGeometry = new TextGeometry(
-            'Bruno Simon',
+            'Jason Lay',
             {
                 font: font,
                 size: 0.5,

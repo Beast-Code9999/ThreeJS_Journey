@@ -14,3 +14,8 @@ npm run dev
 # Build for production in the dist/ directory
 npm run build
 ```
+
+# you can use either of these to deploy live:
+- Vercel
+- Netlify
+- Github Pages
