@@ -107,6 +107,18 @@ graveNormalTexture.repeat.set(0.3, 0.4)
 
 
 
+// door
+const doorColorTexture = textureLoader.load('./door/color.jpg');
+const doorAlphaTexture = textureLoader.load('./door/alpha.jpg');
+const doorAmbientOcclusionTexture = textureLoader.load('./door/ambientOcclusion.jpg');
+const doorHeightTexture = textureLoader.load('./door/height.jpg');
+const doorNormalTexture = textureLoader.load('./door/normal.jpg');
+const doorMetalnessTexture = textureLoader.load('./door/metalness.jpg');
+const doorRoughnessTexture = textureLoader.load('./door/roughness.jpg');
+
+doorColorTexture.colorSpace = THREE.SRGBColorSpace
+
+
 
 /**
  * House
@@ -203,10 +215,18 @@ houseGroup.add(roof)
 // create the door of the house
 const door = new THREE.Mesh(
     // Geometry
-    new THREE.PlaneGeometry(2.2, 2.2),
+    new THREE.PlaneGeometry(2.2, 2.2, 100, 100),
     // material
     new THREE.MeshStandardMaterial({
-        color: '#ff0000'
+        map: doorColorTexture,
+        transparent: true,
+        alphaMap: doorAlphaTexture,
+        displacementMap: doorHeightTexture,
+        displacementScale: 0.15,
+        displacementBias: - 0.04,
+        normalMap: doorNormalTexture,
+        metalnessMap: doorMetalnessTexture,
+        roughnessMap: doorRoughnessTexture,
     })
 )
 door.position.y = 1
