@@ -1,7 +1,7 @@
 import * as THREE from "three"
 import { Renderer } from "./components/Renderer"
 import { Camera } from "./components/Camera"
-import { DirectionalLight } from "./components/directionalLight"
+import { DirectionalLight } from "./components/DirectionalLight"
 import { player } from "./components/Player"
 import { map, initialiseMap } from "./components/Map"
 import { animateVehicles } from "./animateVehicles"
