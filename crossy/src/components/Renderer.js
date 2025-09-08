@@ -7,21 +7,18 @@
 import * as THREE from "three"
 
 export function Renderer() {
-    // Select the canvas element in HTML 
-    const canvas = document.querySelector("canvas.game")
-    // throw an error if canvas is not found
-    if (!canvas) throw new Error("Canvas not found")
+  const canvas = document.querySelector("canvas.game")
+  if (!canvas) throw new Error("Canvas not found")
 
-    // create a renderer responsible for 3D scene on the screen
-    // the objects control how the renderer behaves
-    const renderer = new THREE.WebGLRenderer({
-        alpha: true, // canvas transparent
-        antialias: true, // smoother edges on 3D obejects
-        canvas: canvas // sets the canvas
-    })
-    renderer.setPixelRatio(window.devicePixelRatio)
-    renderer.setSize(window.innerHeight, window.innerHeight)
-    renderer.shadowMap.enabled = true
+  const renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: true,
+    canvas: canvas
+  })
 
-    return renderer
+  renderer.setPixelRatio(window.devicePixelRatio)
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  renderer.shadowMap.enabled = true
+
+  return renderer
 }

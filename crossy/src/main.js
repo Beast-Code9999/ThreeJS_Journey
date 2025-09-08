@@ -50,6 +50,29 @@ function initialiseGame() {
 }
 
 const renderer = Renderer()
+// Resize handling
+window.addEventListener("resize", () => {
+    const width = window.innerWidth
+    const height = window.innerHeight
+
+    // Update renderer
+    renderer.setSize(width, height)
+
+    if (camera.isPerspectiveCamera) {
+        camera.aspect = width / height
+        camera.updateProjectionMatrix()
+    } else if (camera.isOrthographicCamera) {
+        const viewRatio = width / height
+        const size = 300
+
+        camera.left = viewRatio < 1 ? -size / 2 : -size * viewRatio / 2
+        camera.right = viewRatio < 1 ? size / 2 : size * viewRatio / 2
+        camera.top = viewRatio < 1 ? size / 2 / viewRatio : size / 2
+        camera.bottom = viewRatio < 1 ? -size / 2 / viewRatio : -size / 2
+        camera.updateProjectionMatrix()
+    }
+})
+
 // renderer.render(scene, camera)
 
 // Tell the renderer to use the animate() function as the render loop
